@@ -1,8 +1,10 @@
 #!/bin/bash
 
-PACKAGE=$(dpkg-query -W --showformat='${Status}\n' "sysbench"|grep "install ok installed")
-if [ "" = "$PACKAGE" ]; then
-    sudo apt -qq update 2> /dev/null | grep 'nothinggg' && sudo apt -qq install -y sysbench 2> /dev/null | grep 'nothinggg'
+if [ "$(dpkg -l | awk '/sysbench/ {print }'|wc -l)" -ge 1 ]; then
+    echo ""
+else
+    sudo apt update 2> /dev/null | grep 'nothinnggggg'
+    sudo apt install -y sysbench 2> /dev/null | grep 'nothinnggggg'
 fi
 
 TIME=$(date "+%s") # get timestamp
@@ -16,4 +18,4 @@ SEQREAD=$(sysbench fileio --file-num=1 --file-total-size=1G --file-test-mode=seq
 sysbench fileio --file-num=1 --file-total-size=1G cleanup | grep 'nothingggg' # delete test files
 
 # print result
-echo "$TIME"",""$CPU"",""$MEM"",""$RNDREAD"",""$SEQREAD" | sed 's/(//g'
+echo "$TIME"",""$CPU"",""$MEM"",""$RNDREAD"",""$SEQREAD" | sed "s/(//g"
