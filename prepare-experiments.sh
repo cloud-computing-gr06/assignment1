@@ -64,10 +64,10 @@ sudo genisoimage  -output /var/lib/libvirt/images/qemu-vm/qemu-vm-cidata.iso -vo
 # Launch virtual machine
 
 #KVM
-sudo virt-install --connect qemu:///system --virt-type kvm --name kvm-vm --ram 1024 --vcpus=4 --os-type linux --os-variant ubuntu22.04 --disk path=/var/lib/libvirt/images/kvm-vm/kvm-vm.qcow2,format=qcow2 --disk /var/lib/libvirt/images/kvm-vm/kvm-vm-cidata.iso,device=cdrom --import --network network=default --noautoconsole
+sudo virt-install --connect qemu:///system --virt-type kvm --name kvm-vm --ram 4096 --vcpus=4 --os-type linux --os-variant ubuntu22.04 --disk path=/var/lib/libvirt/images/kvm-vm/kvm-vm.qcow2,format=qcow2 --disk /var/lib/libvirt/images/kvm-vm/kvm-vm-cidata.iso,device=cdrom --import --network network=default --noautoconsole
 
 #QEMU
-sudo virt-install --connect qemu:///system --virt-type qemu --name qemu-vm --ram 1024 --vcpus=4 --os-type linux --os-variant ubuntu22.04 --disk path=/var/lib/libvirt/images/qemu-vm/qemu-vm.qcow2,format=qcow2 --disk /var/lib/libvirt/images/qemu-vm/qemu-vm-cidata.iso,device=cdrom --import --network network=default --noautoconsole
+sudo virt-install --connect qemu:///system --virt-type qemu --name qemu-vm --ram 4096 --vcpus=4 --os-type linux --os-variant ubuntu22.04 --disk path=/var/lib/libvirt/images/qemu-vm/qemu-vm.qcow2,format=qcow2 --disk /var/lib/libvirt/images/qemu-vm/qemu-vm-cidata.iso,device=cdrom --import --network network=default --noautoconsole
 
 # Make sure the virtual machine is running:
 sudo virsh list
@@ -90,11 +90,12 @@ docker --version
 
 # ----
 # Write a Dockerfile with Ubuntu 22.04 and benchmark
-cat <<EOF > Dockerfile
+cat > Dockerfile <<EOF
 FROM ubuntu:22.04
 COPY benchmark.sh /benchmark.sh
-RUN chmod +x /benchmark.sh
-CMD ["/benchmark.sh"]
+RUN apt update -y
+RUN apt install sysbench -y
+CMD ["./benchmark.sh"]
 EOF
 
 ----
