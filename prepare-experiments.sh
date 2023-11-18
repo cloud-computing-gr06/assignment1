@@ -78,10 +78,14 @@ sleep 20s
 
 # Get the IP address:
 #sudo virsh domifaddr kvm-vm
-kvmVmIp=$(sudo virsh domifaddr kvm-vm | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | xargs)
+sudo virsh domifaddr kvm-vm | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | xargs > tmp.txt
+kvmVmIp=$(cat tmp.txt)
+>tmp.txt
 
 #sudo virsh domifaddr qemu-vm
-qemuVmIp=$(sudo virsh domifaddr qemu-vm | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | xargs)
+sudo virsh domifaddr qemu-vm | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | xargs > tmp.txt
+qemuVmIp=$(cat tmp.txt)
+rm tmp.txt
 
 # Connect to the instance by the public key:
 # ssh ubuntu@192.168.122.201
