@@ -46,7 +46,7 @@ then
 else
     ./benchmark.sh >> ${Instanz}-native-results.csv
 
-    docker start 94d6bf033726
+    sudo docker start 94d6bf033726
     sleep 250s
 
     ssh ubuntu@192.168.122.232 "/home/ubuntu/./benchmark.sh" >> ${Instanz}-kvm-results.csv
