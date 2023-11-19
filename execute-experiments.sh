@@ -58,6 +58,7 @@ else
     # get ip address for qemu-vm
     sudo virsh domifaddr qemu-vm | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | xargs > tmp.txt
     qemuVmIp=$(cat tmp.txt)
+    >tmp.txt
 
     # run benchmark nativ and add result to csv
     ./benchmark.sh >> ${Instanz}-native-results.csv
