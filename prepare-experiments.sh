@@ -208,8 +208,8 @@ EOF
 # Build the Docker image
 sudo docker build -t docker-image .
 
-# Run Docker container in the background
-sudo docker run -d --name docker-container docker-image
+# Run Docker container
+sudo docker run --name docker-container docker-image
 
 # Output a message indicating the setup is complete
 echo "GCP VM setup complete."
